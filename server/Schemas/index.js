@@ -32,6 +32,11 @@ const Mutation = new GraphQLObjectType({
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
         email: { type: GraphQLString },
+        image: { type: GraphQLString },
+        adress: { type: GraphQLString },
+        job: { type: GraphQLString },
+        phone: { type: GraphQLString },
+        ballot: { type: GraphQLInt },
         password: { type: GraphQLString },
       },
       resolve(parent, args) {
@@ -40,8 +45,40 @@ const Mutation = new GraphQLObjectType({
           firstName: args.firstName,
           lastName: args.lastName,
           email: args.email,
+          image: args.image,
+          adress: args.adress,
+          job: args.job,
+          phone: args.phone,
+          ballot: args.ballot,
           password: args.password,
         });
+        return args;
+      },
+    },
+    updateUser: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLInt },
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+        email: { type: GraphQLString },
+        image: { type: GraphQLString },
+        adress: { type: GraphQLString },
+        job: { type: GraphQLString },
+        phone: { type: GraphQLString },
+        ballot: { type: GraphQLInt },
+        password: { type: GraphQLString },
+      },
+      resolve(parent, args) {
+        debugger;
+        userData.map((a) => {
+          if (a.id === args.id) {
+            a.ballot = args.ballot;
+          }
+          return a;
+        });
+        console.log(args);
+        debugger;
         return args;
       },
     },

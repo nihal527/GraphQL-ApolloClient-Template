@@ -1,40 +1,32 @@
 import "./App.css";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  HttpLink,
-  from,
-} from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
+
 import GetUsers from "./Components/GetUsers";
 import Form from "./Components/Form";
+// import { Switch, Route } from "react-router-dom";
 
-const errorLink = onError(({ graphqlErrors, networkError }) => {
-  if (graphqlErrors) {
-    graphqlErrors.map(({ message, location, path }) => {
-      alert(`Graphql error ${message}`);
-    });
-  }
-});
+import { Router, Route, Switch, useHistory, create } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import React from "react";
 
-const link = from([
-  errorLink,
-  new HttpLink({ uri: "http://localhost:6969/graphql" }),
-]);
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: link,
-});
+const history = createBrowserHistory();
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      {" "}
-      {/* <GetUsers /> */}
-      <Form />
-    </ApolloProvider>
+    // <Router history={history}>
+    <Switch>
+      <Route path="/" exact component={GetUsers} />
+      <Route path="/detail" component={Form} />
+    </Switch>
+    // </Router>
+    // <ApolloProvider client={client}>
+    //   {" "}
+    //   <GetUsers />
+    //   {/* <Form /> */}
+    //   {/* <Routes>
+    //     <Route path="/" element={<GetUsers />} />
+    //     <Route path="/create" element={<Form />} />
+    //   </Routes> */}
+    // </ApolloProvider>
   );
 }
 
